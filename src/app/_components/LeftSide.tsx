@@ -1,6 +1,7 @@
 import { Toggle } from "@/components/ui/toggle";
 import { LayoutDashboard, Settings, Truck } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export const LeftSide = () => {
   return (
@@ -15,10 +16,14 @@ export const LeftSide = () => {
         </div>
       </div>
       <div className="flex flex-col mt-10 gap-6 ">
-        <Toggle className="h-10 w-full rounded-full py-2 px-6 flex justify-start gap-[10px] ">
-          <LayoutDashboard />
-          Food menu
-        </Toggle>
+        <Link href="/foodmenu">
+          <div>
+            <Toggle className="h-10 w-full rounded-full py-2 px-6 flex justify-start gap-[10px] ">
+              <LayoutDashboard />
+              Food menu
+            </Toggle>
+          </div>
+        </Link>
         <Toggle className="h-10 w-full flex py-2 px-6 justify-start gap-[10px] rounded-full">
           <Truck />
           Orders
