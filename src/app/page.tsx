@@ -1,11 +1,12 @@
-import { DishesCategory } from "./_components/adminComponents/DishesCategory";
-import { LeftSide } from "./_components/adminComponents/LeftSide";
-import { HomePage } from "./(user)/HomePage";
+import Layout from "./(user)/layout";
+import { HomePage } from "./_components/userComponents/HomePage";
 
 export default function Home() {
   return (
-    <div className="bg-[#F4F4F5] h-screen w-screen flex pr-10 ">
-      {/* <HomePage /> */}
-    </div>
+    <Layout>
+      <div className="bg-[#404040]  w-screen flex  ">
+        <HomePage />
+      </div>
+    </Layout>
   );
 }
