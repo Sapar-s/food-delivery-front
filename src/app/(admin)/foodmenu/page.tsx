@@ -1,4 +1,4 @@
-import { DishesCategory } from "../_components/DishesCategory";
+import { DishesCategory } from "@/app/_components/adminComponents/DishesCategory";
 
 export default function FoodMenuPage() {
   return (

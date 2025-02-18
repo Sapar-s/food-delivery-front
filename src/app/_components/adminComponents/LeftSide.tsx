@@ -18,16 +18,21 @@ export const LeftSide = () => {
       <div className="flex flex-col mt-10 gap-6 ">
         <Link href="/foodmenu">
           <div>
-            <Toggle className="h-10 w-full rounded-full py-2 px-6 flex justify-start gap-[10px] ">
+            <Toggle className="h-10 w-[165px] rounded-full py-2 px-6 flex justify-start gap-[10px] ">
               <LayoutDashboard />
               Food menu
             </Toggle>
           </div>
         </Link>
-        <Toggle className="h-10 w-full flex py-2 px-6 justify-start gap-[10px] rounded-full">
-          <Truck />
-          Orders
-        </Toggle>
+        <Link href={"/orders"}>
+          <div>
+            <Toggle className="h-10 w-full flex py-2 px-6 justify-start gap-[10px] rounded-full">
+              <Truck />
+              Orders
+            </Toggle>
+          </div>
+        </Link>
+
         <Toggle className="h-10 w-full py-2 px-6 flex justify-start gap-[10px] rounded-full">
           <Settings />
           Settings
