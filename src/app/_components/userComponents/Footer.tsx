@@ -5,7 +5,7 @@ export const Footer = () => {
     <div className="w-screen bg-[#18181B] flex  ">
       <div className="max-w-[1264px] w-full h-[755px]">
         <div className="w-screen flex mt-12 justify-center bg-[#ef4444]">
-          <div className="max-w-[1264px] w-full flex gap-[34px] items-center px-[98px] py-[28px] overflow-hidden ">
+          <div className="max-w-[1264px] w-full flex gap-[34px] items-center px-[98px] py-[28px] text-nowrap overflow-hidden ">
             <h2 className="text-[30px] font-[600] leading-[36px] text-primary-foreground ">
               Fresh fast delivered
             </h2>

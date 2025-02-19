@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Header = () => {
   return (
@@ -17,12 +18,19 @@ export const Header = () => {
           </div>
         </div>
         <div className="flex gap-3">
-          <Button variant={"secondary"} className="py-2 px-3 rounded-full  ">
-            Sign up
-          </Button>
-          <Button variant={"destructive"} className="py-2 px-3 rounded-full  ">
-            Log in
-          </Button>
+          <Link href="/signup">
+            <Button variant={"secondary"} className="py-2 px-3 rounded-full  ">
+              Sign up
+            </Button>
+          </Link>
+          <Link href="/login">
+            <Button
+              variant={"destructive"}
+              className="py-2 px-3 rounded-full  "
+            >
+              Log in
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
