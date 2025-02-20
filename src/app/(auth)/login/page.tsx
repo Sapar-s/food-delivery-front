@@ -1,10 +1,41 @@
+"use client";
+
 import { Inputs } from "@/app/_components/userComponents/Inputs";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
 
 export default function LoginPage() {
+  const router = useRouter();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+    router.push("/");
+  }
   return (
     <div className="w-[416px] flex flex-col gap-6 justify-center items-start ">
       <Link href={"/"}>
@@ -21,18 +52,53 @@ export default function LoginPage() {
           Log in to enjoy your favorite dishes.
         </h4>
       </div>
-      <div className="flex flex-col gap-4">
-        <Inputs type="email" place="Enter your email address" />
-        <Inputs type="password" place="Confirm" />
-        <div>
-          <Button className="ml-[-14px] " variant={"link"}>
-            Forgot password ?
+
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    type="email"
+                    className="w-[416px]"
+                    placeholder="Enter your email address"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    type="password"
+                    className="w-[416px]"
+                    placeholder="Password"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button className="w-full " type="submit">
+            Let's Go
           </Button>
-        </div>
-      </div>
-      <Link className="w-full" href={"/"}>
-        <Button className="w-full ">Let's Go</Button>
-      </Link>
+        </form>
+      </Form>
       <div className="flex w-full justify-center gap-3 items-center">
         <h4 className="text-[16px] font-[400] leading-[24px] text-muted-foreground ">
           Don’t have an account?

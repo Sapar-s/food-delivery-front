@@ -18,7 +18,7 @@ export const HomePage = () => {
     setIsRed(!isRed);
   };
   return (
-    <div>
+    <div className="mb-[134px] ">
       <div className="w-screen h-[550px] overflow-hidden ">
         <img
           alt=""
@@ -48,7 +48,7 @@ export const HomePage = () => {
                   <Badge
                     onClick={handleClick}
                     variant={"destructive"}
-                    className={`w-[100px] py-2 px-3 rounded-full flex items-center justify-center ${
+                    className={`w-[100px] py-2 px-3 cursor-pointer rounded-full flex items-center justify-center ${
                       isRed ? "bg-[#EF4444]" : "bg-background"
                     }  text-primary `}
                   >
@@ -62,12 +62,29 @@ export const HomePage = () => {
           </Carousel>
           {/* </div> */}
         </div>
-        <div className="w-full flex justify-center gap-9 mt-8 flex-wrap ">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <div key={index} className="w-[100px] h-[100px] bg-white ">
-              <Cart />
-            </div>
-          ))}
+        <div className="max-w-[1264px] w-full ">
+          <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
+            Appetizers
+          </h2>
+          <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap ">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className=" bg-white rounded-[20px]">
+                <Cart />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="max-w-[1264px] w-full ">
+          <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
+            Salads
+          </h2>
+          <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap ">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className=" bg-white  rounded-[20px]">
+                <Cart />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
