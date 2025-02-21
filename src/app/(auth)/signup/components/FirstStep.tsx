@@ -1,6 +1,5 @@
 "use client";
 
-import { Inputs } from "@/app/_components/userComponents/Inputs";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
@@ -80,7 +79,7 @@ export default function FirsStep({
             )}
           />
           <Button className="w-full " type="submit">
-            Let's Go
+            Let&#39;s Go
           </Button>
         </form>
       </Form>
