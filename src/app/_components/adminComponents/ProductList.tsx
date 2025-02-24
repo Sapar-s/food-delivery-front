@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
+import { CloudinaryUpload } from "./CloudinaryUpload";
 
 export const ProductList = () => {
   return (
@@ -65,6 +66,7 @@ export const ProductList = () => {
                 <h4 className="text-[14px] font-[500] leading-[14px] ">
                   Food image
                 </h4>
+                <CloudinaryUpload />
               </div>
               <div className="w-full pt-6 flex items-center justify-end ">
                 <Button className="h-10 py-2 px-4 ">Add category</Button>
