@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -16,6 +17,7 @@ export const CloudinaryUpload = () => {
     const file = e.target.files[0];
     if (file) {
       setFile(file);
+      setImage(URL.createObjectURL(file));
     }
   };
 
@@ -48,20 +50,32 @@ export const CloudinaryUpload = () => {
   console.log(file);
 
   return (
-    <div>
-      <div onClick={handleUpload} className="w-[200px] h-[200px] ">
-        Upload
-        <label hidden htmlFor="file">
-          <Input id="file" type="file" onChange={handleFile} />
-        </label>
-      </div>
-
-      {image && (
-        <div>
-          {" "}
-          <Image alt="a" src={image} width={200} height={150} />{" "}
+    <>
+      {image ? (
+        <div className="w-full h-full relative ">
+          <Image
+            alt="file-input"
+            src={image}
+            width={1000}
+            height={1000}
+            className="size-full object-cover"
+          />
+          <Button className="absolute top-2 right-2 rounded-full w-9 h-9  ">
+            <X />
+          </Button>
         </div>
+      ) : (
+        <label htmlFor="file-input" className="bg-blue-300 p-4 block size-full">
+          <ImageIcon />
+          Choose a file or drag & drop it here
+          <Input
+            id="file-input"
+            type="file"
+            onChange={handleFile}
+            className="hidden"
+          />
+        </label>
       )}
-    </div>
+    </>
   );
 };

@@ -62,7 +62,7 @@ export const ProductList = () => {
                   className="w-full py-2 px-3 "
                 />
               </div>
-              <div>
+              <div className="h-[160px] w-full flex flex-col gap-2 ">
                 <h4 className="text-[14px] font-[500] leading-[14px] ">
                   Food image
                 </h4>
