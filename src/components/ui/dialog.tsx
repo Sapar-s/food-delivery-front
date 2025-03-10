@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Button } from "./button";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -44,11 +45,17 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute flex items-center justify-center w-9 h-9 border-[1px] border-border-input  right-4 top-4 rounded-full opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+      <DialogPrimitive.Close
+        asChild
+        className="absolute flex items-center justify-center right-4 top-4"
+      >
+        <Button variant="secondary" className="rounded-full size-9">
+          <X className="h-4 w-4" />
+        </Button>
         {/* <div className="flex items-center justify-center w-9 h-9 rounded-full bg-background border-[1px] border-border-input"> */}
-        <X className="h-4 w-4  " />
+
         {/* </div> */}
-        <span className="sr-only">Close</span>
+        {/* <span className="sr-only">Close</span> */}
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>

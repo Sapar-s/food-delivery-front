@@ -14,10 +14,10 @@
   margin: 0;
   padding: 0;
 }
-
+/* 
 body {
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 @layer base {
   :root {
@@ -83,8 +83,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-
 
 @layer base {
   * {

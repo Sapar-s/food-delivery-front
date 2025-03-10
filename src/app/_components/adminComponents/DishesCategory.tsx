@@ -13,7 +13,7 @@ import { Plus } from "lucide-react";
 export const DishesCategory = () => {
   return (
     <div className="w-full p-6 bg-white rounded-[12px] mt-[84px] ">
-      <h4 className="text-[20px] font-[600] leading-[28px] tracking-[-0.5px] ">
+      <h4 className="text-[20px] font-[600] leading-[28px] tracking-[-0.5px]">
         Dishes category
       </h4>
       <div className="mt-4 flex gap-3 ">
