@@ -6,7 +6,7 @@ import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
-export const CloudinaryUpload = () => {
+export const CloudinaryUpload = ({ width }: { width: string }) => {
   const [file, setFile] = useState<any>(null);
   const [image, setImage] = useState<any>(null);
 
@@ -62,7 +62,7 @@ export const CloudinaryUpload = () => {
             src={image}
             width={1000}
             height={1000}
-            className="size-full object-cover rounded-md border border-dashed border-blue-500/20 bg-blue-500/5 bg-cover bg-no-repeat bg-center"
+            className={`${width}  object-cover rounded-md border border-dashed border-blue-500/20 bg-blue-500/5 bg-cover bg-no-repeat bg-center`}
           />
           <Button
             onClick={deleteImage}
@@ -74,7 +74,7 @@ export const CloudinaryUpload = () => {
       ) : (
         <label
           htmlFor="file-input"
-          className="flex flex-col items-center justify-center cursor-pointer gap-2 p-4  rounded-md border border-dashed border-blue-500/20 bg-blue-500/5 size-full"
+          className={` ${width} flex flex-col items-center justify-center cursor-pointer gap-2 p-4  rounded-md border border-dashed border-blue-500/20 bg-blue-500/5 `}
         >
           <div className="p-2 bg-[#fff] rounded-full">
             <ImageIcon className=" w-4 h-4 " />{" "}
