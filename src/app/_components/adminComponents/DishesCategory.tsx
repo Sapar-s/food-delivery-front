@@ -34,7 +34,9 @@ const formShema = z.object({
 });
 
 export const DishesCategory = () => {
-  const [categories, setCategories] = useState<any | null>(null);
+  const [categories, setCategories] = useState<
+    { categoryName: string; _id: string }[] | null
+  >(null);
   const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof formShema>>({

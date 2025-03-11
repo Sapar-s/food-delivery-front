@@ -1,4 +1,3 @@
-import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { LayoutDashboard, Settings, Truck } from "lucide-react";
 import Image from "next/image";

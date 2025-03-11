@@ -7,14 +7,15 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 export const CloudinaryUpload = ({ width }: { width: string }) => {
-  const [file, setFile] = useState<any>(null);
-  const [image, setImage] = useState<any>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<string | null>(null);
 
-  const PRESET_NAME = "food-delivery-app";
-  const CLOUDINARY_NAME = "da2ltmfaf";
+  console.log("fiileee", image);
+  // const PRESET_NAME = "food-delivery-app";
+  // const CLOUDINARY_NAME = "da2ltmfaf";
 
-  const handleFile = (e: any) => {
-    const file = e.target.files[0];
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
     if (file) {
       setFile(file);
       setImage(URL.createObjectURL(file));
