@@ -15,7 +15,7 @@ export const AddNewDish = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex w-[270.75px] h-full flex-col gap-6 py-2 px-4 justify-center items-center border-[1px] border-dashed border-[#ef4444] rounded-[20px] ">
+        <div className="flex w-[270.75px] h-full flex-col gap-6 py-2 px-4 justify-center items-center border-[1px]  border-dashed border-[#ef4444] rounded-[20px] ">
           <Button
             variant={"destructive"}
             className="w-10 h-10 flex items-center justify-center rounded-full "
