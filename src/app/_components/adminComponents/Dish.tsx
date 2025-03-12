@@ -17,7 +17,7 @@ import { Pencil, Trash } from "lucide-react";
 import { CloudinaryUpload } from "./CloudinaryUpload";
 import { Button } from "@/components/ui/button";
 
-export const EditDish = () => {
+export const Dish = () => {
   return (
     <div className="flex w-[270.75px] h-full flex-col gap-5  p-4  items-start border-[1px] bg-[#fff] border-border rounded-[20px] ">
       <div

@@ -16,7 +16,7 @@ export const LeftSide = () => {
   };
 
   return (
-    <div className="w-[205px] h-screen bg-[#fff] py-9 px-5">
+    <div className="w-[205px] bg-[#fff] py-9 px-5">
       <div className="flex items-center justify-center gap-[10px]">
         <Image src="/logo.svg" alt="" width={40} height={40} />
         <div>

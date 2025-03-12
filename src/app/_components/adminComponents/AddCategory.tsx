@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 
 const formShema = z.object({
   categoryName: z.string().min(2, "Minimum 2 letter !"),
@@ -28,19 +27,18 @@ const formShema = z.object({
 export const AddCategory = ({
   createCategories,
   updateCategory,
-  openDialog,
-  title,
-  button,
+  isEdit,
+  saveID,
+  setOpen,
+  open,
 }: {
   createCategories: (categoryName: string) => void;
-  updateCategory: (categoryName: string) => void;
-  openDialog: boolean;
-  title: string;
-  button: string;
+  updateCategory: (categoryName: string, categoryId: string) => void;
+  isEdit: boolean;
+  saveID: string;
+  setOpen: (_a: boolean) => void;
+  open: boolean;
 }) => {
-  const [open, setOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-
   const form = useForm<z.infer<typeof formShema>>({
     resolver: zodResolver(formShema),
     defaultValues: {
@@ -50,14 +48,15 @@ export const AddCategory = ({
 
   function onSubmit(values: z.infer<typeof formShema>) {
     console.log(values);
-    createCategories(values.categoryName);
+    if (isEdit) {
+      updateCategory(saveID, values.categoryName);
+    } else {
+      createCategories(values.categoryName);
+    }
+
     form.reset();
     setOpen(false);
   }
-
-  //   const openDia = ()=>{
-  //     if(openDialog)
-  //   }
 
   return (
     <>
@@ -81,8 +80,7 @@ export const AddCategory = ({
             >
               <div className="w-full pb-4 fle justify-center items-center gap-[10px] ">
                 <h4 className="text-[18px] font-[600] leading-[28px]  ">
-                  {title}
-                  {/* Add new category */}
+                  {isEdit ? "Edit category" : "Add new category"}
                 </h4>
               </div>
               <FormField
@@ -110,8 +108,7 @@ export const AddCategory = ({
 
               <div className="w-full pt-6 flex items-center justify-end ">
                 <Button type="submit" className="h-10 py-2 px-4 ">
-                  {button}
-                  {/* Add category */}
+                  Add category
                 </Button>
               </div>
             </form>
