@@ -16,16 +16,18 @@ export const LeftSide = () => {
   };
 
   return (
-    <div className="w-[205px] bg-[#fff] py-9 px-5">
-      <div className="flex items-center justify-center gap-[10px]">
-        <Image src="/logo.svg" alt="" width={40} height={40} />
-        <div>
-          <h4 className="text-[18px] font-[600] leading-[28px]">NomNom</h4>
-          <h4 className="text-[12px] font-[400] leading-[16px] text-[#71717A]">
-            Swift delivery
-          </h4>
+    <div className="w-[205px] h-screen bg-[#fff] py-9 px-5  sticky top-0 ">
+      <Link href={"/"}>
+        <div className="flex items-center justify-center gap-[10px] cursor-pointer">
+          <Image src="/logo.svg" alt="" width={40} height={40} />
+          <div>
+            <h4 className="text-[18px] font-[600] leading-[28px]">NomNom</h4>
+            <h4 className="text-[12px] font-[400] leading-[16px] text-[#71717A]">
+              Swift delivery
+            </h4>
+          </div>
         </div>
-      </div>
+      </Link>
       <ToggleGroup
         type="single"
         value={getActiveValue()}

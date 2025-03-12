@@ -18,7 +18,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
@@ -98,7 +97,7 @@ export const AddNewDish = ({ categoryId }: { categoryId: string }) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-[460px] p-6 flex flex-col items-start gap-6  "
+            className="w-[460px]  flex flex-col items-start gap-6  "
           >
             <div className="w-full pb-4 flex justify-center items-center gap-[10px] ">
               <h4 className="text-[18px] font-[600] leading-[28px]  ">
@@ -188,48 +187,6 @@ export const AddNewDish = ({ categoryId }: { categoryId: string }) => {
             </div>
           </form>
         </Form>
-        {/*  */}
-        {/* <div className="w-[460px] p-6 flex flex-col items-start gap-6 "> */}
-        {/* <div className="w-full pb-4 flex justify-center items-center gap-[10px] ">
-          <h4 className="text-[18px] font-[600] leading-[28px]  ">
-            Add new Dish to Appetizers
-          </h4>
-        </div> */}
-
-        {/* <div className="flex gap-6 items-start ">
-          <div className="flex flex-col gap-2 items-start h-[60px] w-full ">
-            <h4 className="text-[14px] font-[500] leading-[14px] ">
-              Food name
-            </h4>
-            <Input placeholder="Type food name " className="w-full " />
-          </div>
-
-          <div className="flex flex-col gap-2 items-start h-[60px] w-full ">
-            <h4 className="text-[14px] font-[500] leading-[14px] ">
-              Food price
-            </h4>
-            <Input placeholder="Enter price... " className="w-full " />
-          </div>
-        </div> */}
-
-        {/* <div className="w-full h-[60px] flex flex-col gap-[8px] ">
-          <p className="text-[14px] leading-[14px] font-[500] ">Ingredients</p>
-          <Input
-            placeholder="List ingredients... "
-            className="w-full py-2 px-3 "
-          />
-        </div> */}
-
-        {/* <div className="h-[160px] w-full flex flex-col gap-2 ">
-          <h4 className="text-[14px] font-[500] leading-[14px] ">Food image</h4>
-          <CloudinaryUpload width="size-full" />
-        </div> */}
-
-        {/* <div className="w-full pt-6 flex items-center justify-end ">
-          <Button className="h-10 py-2 px-4 ">Add Dish</Button>
-        </div> */}
-
-        {/* </div> */}
       </DialogContent>
     </Dialog>
   );

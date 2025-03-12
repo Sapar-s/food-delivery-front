@@ -13,7 +13,7 @@ export const ProductList = () => {
       const data = await fetch("http://localhost:5000/food-category");
       const jsonData = await data.json();
       setCategories(jsonData.categories_data);
-      console.log({ jsonData });
+      console.log("Product list in jsonData => ", jsonData);
     } catch (error) {
       console.log("Error", error);
       alert("Error in getCategories");
@@ -22,7 +22,7 @@ export const ProductList = () => {
 
   useEffect(() => {
     getCategories();
-  }, [categories]);
+  }, []);
 
   return (
     <div className="w-full ">
