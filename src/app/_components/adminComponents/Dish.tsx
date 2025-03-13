@@ -1,25 +1,16 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Pencil, Trash } from "lucide-react";
-import { CloudinaryUpload } from "./CloudinaryUpload";
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { AddNewDish } from "./AddNewDish";
+import { ApiResponse, FoodType } from "@/utils/types";
+import { EditDish } from "./EditDish";
 
-export const Dish = () => {
-  const [foods, setFoods] = useState<null>(null);
+export const Dish = ({
+  categoryId,
+  categoryName,
+}: {
+  categoryId: string;
+  categoryName: string;
+}) => {
+  const [foods, setFoods] = useState<ApiResponse | null>(null);
 
   const getFoods = async () => {
     try {
@@ -30,7 +21,23 @@ export const Dish = () => {
       console.log("Dish.tsx in jsonData => ", jsonData);
     } catch (error) {
       console.log("Error", error);
-      alert("Error in createFood");
+      alert("Error in getFoods");
+    }
+  };
+
+  const deleteFood = async (foodId: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/food/${foodId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response);
+      getFoods();
+    } catch (error) {
+      console.log("Error", error);
+      alert("Error in deleteFoods");
     }
   };
 
@@ -39,127 +46,38 @@ export const Dish = () => {
   }, []);
 
   return (
-    <div>
-      {/* {foods?.map((food) => {
-        return ( */}
-      <div className="flex w-[270.75px] h-full flex-col gap-5  p-4  items-start border-[1px] bg-[#fff] border-border rounded-[20px] ">
-        <div
-          className="w-full h-full bg-cover bg-center flex p-5 justify-end items-end gap-[10px] rounded-xl  "
-          style={{
-            backgroundImage: `url("https://res.cloudinary.com/da2ltmfaf/image/upload/v1740015838/Food_Image_hirwob.png")`,
-          }}
-        >
-          <Dialog>
-            <DialogTrigger asChild>
-              <div className="w-11 h-11 py-2 px-4 flex items-center justify-center gap-2 bg-[#fff] rounded-full cursor-pointer ">
-                <Pencil className="text-[#ef4444] w-4 h-4 " />
+    <div className="h-full flex flex-wrap gap-4 ">
+      <AddNewDish categoryId={categoryId} categoryName={categoryName} />
+      {foods?.getFood?.map((food: FoodType, index: number) => {
+        return (
+          <div
+            key={index}
+            className="flex w-[270.75px] h-[241px] flex-col gap-5  p-4  items-start border-[1px] bg-[#fff] border-border rounded-[20px] "
+          >
+            <div
+              className="w-full h-full bg-cover bg-center flex p-5 justify-end items-end gap-[10px] rounded-xl  "
+              style={{
+                backgroundImage: `url("https://res.cloudinary.com/da2ltmfaf/image/upload/v1740015838/Food_Image_hirwob.png")`,
+              }}
+            >
+              <EditDish deleteFood={deleteFood} foodID={food?._id} />
+            </div>
+            <div className="flex flex-col items-start gap-2 ">
+              <div className="flex justify-center items-center gap-[10px] ">
+                <small className="text-[14px] font-[500] leading-[20px] text-[#ef4444] ">
+                  {food?.foodName}
+                </small>
+                <h5 className="text-[12px] font-[400] leading-[16px] ">
+                  {food?.price}
+                </h5>
               </div>
-            </DialogTrigger>
-
-            <DialogContent>
-              <DialogHeader hidden></DialogHeader>
-              <DialogTitle hidden></DialogTitle>
-              <div className="w-[472px] p-6 flex flex-col items-start gap-3 ">
-                <div className="w-full pb-4 flex justify-center items-center gap-[10px] ">
-                  <h4 className="text-[18px] font-[600] leading-[28px]  ">
-                    Dishes info
-                  </h4>
-                </div>
-                <div className="flex flex-col items-start w-full ">
-                  <div className="flex p-3 items-start gap-4 w-full ">
-                    <h5 className="w-[120px] text-[12px] font-[400] leading-[16px] text-muted-foreground ">
-                      Dish name
-                    </h5>
-                    <Input className="w-[288px] " type="text" />
-                  </div>
-                  <div className="flex p-3 items-start gap-4 w-full ">
-                    <h5 className="w-[120px] text-[12px] font-[400] leading-[16px] text-muted-foreground ">
-                      Dish category
-                    </h5>
-                    <Select>
-                      <SelectTrigger className="w-[288px]">
-                        <SelectValue placeholder="" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="a">
-                          <div className="flex py-[2px] px-[10px] items-start gap-[10px] rounded-full bg-secondary ">
-                            Grilled Chicken cobb salad
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="b">
-                          <div className="flex py-[2px] px-[10px] items-start gap-[10px] rounded-full bg-secondary ">
-                            Burrata Caprese
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="c">
-                          <div className="flex py-[2px] px-[10px] items-start gap-[10px] rounded-full bg-secondary ">
-                            Grilled chicken
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="d">
-                          <div className="flex py-[2px] px-[10px] items-start gap-[10px] rounded-full bg-secondary ">
-                            Sunshine Stackers
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="e">
-                          <div className="flex py-[2px] px-[10px] items-start gap-[10px] rounded-full bg-secondary ">
-                            Brie Crostini Appetizer
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="flex p-3 items-start gap-4 w-full ">
-                    <h5 className="w-[120px] text-[12px] font-[400] leading-[16px] text-muted-foreground ">
-                      Ingredients
-                    </h5>
-                    <Input className="w-[288px] " type="text" />
-                  </div>
-                  <div className="flex p-3 items-start gap-4 w-full ">
-                    <h5 className="w-[120px] text-[12px] font-[400] leading-[16px] text-muted-foreground ">
-                      Price
-                    </h5>
-                    <Input className="w-[288px]  " type="text" />
-                  </div>
-                  <div className="flex p-3 items-start gap-4 w-full ">
-                    <h5 className="w-[120px] text-[12px] font-[400] leading-[16px] text-muted-foreground ">
-                      Image
-                    </h5>
-                    <CloudinaryUpload width="full" />
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center w-full pt-6 ">
-                  <Button
-                    variant={"outline"}
-                    className="h-10 py-2 px-4 flex justify-center items-center gap-2 rounded-md border-destructive "
-                  >
-                    <Trash className="w-4 h-4 text-[#ef4444] " />
-                  </Button>
-                  <Button className="h-10  py-2 px-4 flex justify-center items-center gap-2 ">
-                    Save changes
-                  </Button>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-        <div className="flex flex-col items-start gap-2 ">
-          <div className="flex justify-center items-center gap-[10px] ">
-            <small className="text-[14px] font-[500] leading-[20px] text-[#ef4444] ">
-              Grilled Chicken cobb salad
-            </small>
-            <h5 className="text-[12px] font-[400] leading-[16px] ">$12.99</h5>
+              <h5 className="text-[12px] font-[400] leading-[16px] text-foreground ">
+                {food?.ingredients}
+              </h5>
+            </div>
           </div>
-          <h5 className="text-[12px] font-[400] leading-[16px] text-foreground ">
-            Fluffy pancakes stacked with fruits, cream, syrup, and powdered
-            sugar.
-          </h5>
-        </div>
-      </div>
-      {/* );
-      })} */}
+        );
+      })}
     </div>
   );
 };

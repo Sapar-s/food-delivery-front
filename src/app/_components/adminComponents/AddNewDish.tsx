@@ -27,18 +27,24 @@ import { z } from "zod";
 
 const formSchema = z.object({
   foodName: z.string().min(2, {
-    message: "Food name must be at least 2 characters.",
+    message: "Food name minimum 2 letter required",
   }),
-  price: z.string({
-    message: "Price is required",
-  }),
-  ingredients: z
-    .string()
-    .describe("A useful bit of text, if you know what to do with it."),
+  price: z
+    .string({
+      message: "Price is required",
+    })
+    .min(1, "Please price is required"),
+  ingredients: z.string().min(2, "Ingredients must contain at least 2 text"),
   category: z.string(),
 });
 
-export const AddNewDish = ({ categoryId }: { categoryId: string }) => {
+export const AddNewDish = ({
+  categoryId,
+  categoryName,
+}: {
+  categoryId: string;
+  categoryName: string;
+}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,11 +56,11 @@ export const AddNewDish = ({ categoryId }: { categoryId: string }) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createFood();
+    createFood(values);
     console.log(values);
   }
 
-  const createFood = async () => {
+  const createFood = async (dish: any) => {
     try {
       await fetch("http://localhost:5000/food", {
         method: "POST",
@@ -62,10 +68,9 @@ export const AddNewDish = ({ categoryId }: { categoryId: string }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          foodName: "Steak",
-          price: 100,
-          ingredients:
-            " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, necessitatibus.",
+          foodName: dish.foodName,
+          price: dish.price,
+          ingredients: dish.ingredients,
           category: categoryId,
         }),
       });
@@ -77,15 +82,15 @@ export const AddNewDish = ({ categoryId }: { categoryId: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex w-[270.75px] h-full flex-col gap-6 py-2 px-4 justify-center items-center border-[1px]  border-dashed border-[#ef4444] rounded-[20px] ">
+        <div className="flex h-[241px] w-[270.75px]  flex-col gap-6 py-2 px-4 justify-center items-center border-[1px]  border-dashed border-[#ef4444] rounded-[20px] ">
           <Button
             variant={"destructive"}
             className="w-10 h-10 flex items-center justify-center rounded-full "
           >
             <Plus />
           </Button>
-          <small className="text-[14px] font-[500] leading-[20px] ">
-            Add new Dish to Appetizers
+          <small className="text-[14px] flex flex-col text-center items-center w-[154px] font-[500] leading-[20px] ">
+            Add new Dish to <br /> {categoryName}
           </small>
         </div>
       </DialogTrigger>
@@ -101,7 +106,7 @@ export const AddNewDish = ({ categoryId }: { categoryId: string }) => {
           >
             <div className="w-full pb-4 flex justify-center items-center gap-[10px] ">
               <h4 className="text-[18px] font-[600] leading-[28px]  ">
-                Add new Dish to Appetizers
+                Add new Dish to {categoryName}
               </h4>
             </div>
 

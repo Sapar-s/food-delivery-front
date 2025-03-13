@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AddNewDish } from "./AddNewDish";
 import { Dish } from "./Dish";
 import { FoodCategoryType } from "@/utils/types";
 
@@ -35,10 +34,11 @@ export const ProductList = () => {
             <h4 className="text-[20px] font-[600] leading-[28px] ">
               {category.categoryName}
             </h4>
-            <div className="w-full h-[241px] flex flex-wrap gap-4 items-start ">
-              {/* add new dish heseg */}
-              <AddNewDish categoryId={category._id} />
-              <Dish />
+            <div className="w-full flex gap-4 items-start ">
+              <Dish
+                categoryId={category._id}
+                categoryName={category.categoryName}
+              />
             </div>
           </div>
         );
