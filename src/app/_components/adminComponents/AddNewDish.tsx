@@ -42,9 +42,13 @@ const formSchema = z.object({
 export const AddNewDish = ({
   categoryId,
   categoryName,
+  open,
+  setOpen,
 }: {
   categoryId: string;
   categoryName: string;
+  open: boolean;
+  setOpen: (_e: boolean) => void;
 }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,6 +63,7 @@ export const AddNewDish = ({
   function onSubmit(values: z.infer<typeof formSchema>) {
     createFood(values);
     console.log(values);
+    setOpen(false);
   }
 
   const createFood = async (dish: DishType) => {
@@ -81,7 +86,7 @@ export const AddNewDish = ({
     }
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="flex h-[241px] w-[270.75px]  flex-col gap-6 py-2 px-4 justify-center items-center border-[1px]  border-dashed border-[#ef4444] rounded-[20px] ">
           <Button

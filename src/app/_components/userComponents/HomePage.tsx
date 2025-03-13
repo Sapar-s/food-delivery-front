@@ -7,15 +7,38 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Cart } from "./Carts";
+import { FoodCategoryType } from "@/utils/types";
 
 export const HomePage = () => {
-  const [isRed, setIsRed] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null
+  );
+  const [categories, setCategories] = useState<FoodCategoryType[] | null>(null);
 
-  const handleClick = () => {
-    setIsRed(!isRed);
+  const handleClick = (categoryId: string) => {
+    setSelectedCategoryId(
+      categoryId === selectedCategoryId ? null : categoryId
+    );
   };
+
+  const getCategories = async () => {
+    try {
+      const data = await fetch("http://localhost:5000/food-category");
+      const jsonData = await data.json();
+      setCategories(jsonData.categories_data);
+      console.log({ jsonData });
+    } catch (error) {
+      console.log("Error", error);
+      alert("Error in getCategories");
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <div className="mb-[134px] ">
       <div className="w-screen h-[550px] overflow-hidden ">
@@ -33,7 +56,6 @@ export const HomePage = () => {
           <h2 className="text-[30px]  font-[600] leading-[36px] tracking-[-0.75px] text-white  ">
             Categories
           </h2>
-          {/* <div> */}
           <Carousel
             opts={{
               align: "start",
@@ -42,16 +64,22 @@ export const HomePage = () => {
           >
             <CarouselPrevious className="bg-background-none border-none text-white" />
             <CarouselContent className="pl-4">
-              {Array.from({ length: 25 }).map((_, index) => (
+              {categories?.map((category, index) => (
                 <div key={index} className="p-1">
                   <Badge
-                    onClick={handleClick}
-                    variant={"destructive"}
+                    onClick={() => handleClick(category._id)}
+                    variant={
+                      category._id === selectedCategoryId
+                        ? "destructive"
+                        : "secondary"
+                    }
                     className={`w-[100px] py-2 px-3 cursor-pointer rounded-full flex items-center justify-center ${
-                      isRed ? "bg-[#EF4444]" : "bg-background"
+                      category._id === selectedCategoryId
+                        ? "bg-[#EF4444]"
+                        : "bg-background"
                     }  text-primary `}
                   >
-                    {index + 1}
+                    {category?.categoryName}
                   </Badge>
                 </div>
               ))}
@@ -59,31 +87,24 @@ export const HomePage = () => {
 
             <CarouselNext className="bg-background-none border-none text-white" />
           </Carousel>
-          {/* </div> */}
         </div>
         <div className="max-w-[1264px] w-full ">
-          <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
-            Appetizers
-          </h2>
-          <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap ">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className=" bg-white rounded-[20px]">
-                <Cart />
+          {categories?.map((category, index) => {
+            return (
+              <div key={index}>
+                <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
+                  {category?.categoryName}
+                </h2>
+                <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap ">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <div key={index} className=" bg-white rounded-[20px]">
+                      <Cart />
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-        <div className="max-w-[1264px] w-full ">
-          <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
-            Salads
-          </h2>
-          <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap ">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className=" bg-white  rounded-[20px]">
-                <Cart />
-              </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </div>

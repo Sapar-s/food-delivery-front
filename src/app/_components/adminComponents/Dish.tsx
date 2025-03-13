@@ -6,9 +6,13 @@ import { EditDish } from "./EditDish";
 export const Dish = ({
   categoryId,
   categoryName,
+  open,
+  setOpen,
 }: {
   categoryId: string;
   categoryName: string;
+  open: boolean;
+  setOpen: (_e: boolean) => void;
 }) => {
   const [foods, setFoods] = useState<ApiResponse | null>(null);
 
@@ -47,7 +51,12 @@ export const Dish = ({
 
   return (
     <div className="h-full flex flex-wrap gap-4 ">
-      <AddNewDish categoryId={categoryId} categoryName={categoryName} />
+      <AddNewDish
+        open={open}
+        setOpen={setOpen}
+        categoryId={categoryId}
+        categoryName={categoryName}
+      />
       {foods?.getFood?.map((food: FoodType, index: number) => {
         return (
           <div
