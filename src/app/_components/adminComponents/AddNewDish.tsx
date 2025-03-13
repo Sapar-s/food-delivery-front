@@ -24,6 +24,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { DishType } from "@/utils/types";
 
 const formSchema = z.object({
   foodName: z.string().min(2, {
@@ -60,7 +61,7 @@ export const AddNewDish = ({
     console.log(values);
   }
 
-  const createFood = async (dish: any) => {
+  const createFood = async (dish: DishType) => {
     try {
       await fetch("http://localhost:5000/food", {
         method: "POST",

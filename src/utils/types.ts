@@ -22,3 +22,10 @@ export type ApiResponse = {
   getFood: FoodType[];
   message: string;
 };
+
+export type DishType = {
+  category: string;
+  foodName: string;
+  ingredients: string;
+  price: string;
+};
