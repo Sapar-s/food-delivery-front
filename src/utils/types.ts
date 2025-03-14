@@ -7,7 +7,7 @@ export type FoodCategoryType = {
 };
 
 export type FoodType = {
-  category: string;
+  category: FoodCategoryType;
   createdAt: string;
   foodName: string;
   image: string;

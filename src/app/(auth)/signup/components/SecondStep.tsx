@@ -62,7 +62,7 @@ export const SecondStep = ({
   });
 
   function onSubmit(values: z.infer<typeof passwordForm>) {
-    console.log(values);
+    // console.log(values);
     router.push("/login");
   }
 

@@ -28,7 +28,7 @@ export const HomePage = () => {
       const data = await fetch("http://localhost:5000/food-category");
       const jsonData = await data.json();
       setCategories(jsonData.categories_data);
-      console.log({ jsonData });
+      // console.log({ jsonData });
     } catch (error) {
       console.log("Error", error);
       alert("Error in getCategories");

@@ -7,13 +7,13 @@ import { FoodCategoryType } from "@/utils/types";
 export const ProductList = () => {
   const [categories, setCategories] = useState<FoodCategoryType[] | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  console.log("test => ", categories);
+  // console.log("test => ", categories);
   const getCategories = async () => {
     try {
       const data = await fetch("http://localhost:5000/food-category");
       const jsonData = await data.json();
       setCategories(jsonData.categories_data);
-      console.log("Product list in jsonData => ", jsonData);
+      // console.log("Product list in jsonData => ", jsonData);
     } catch (error) {
       console.log("Error", error);
       alert("Error in getCategories");

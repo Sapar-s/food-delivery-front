@@ -47,7 +47,7 @@ export const AddCategory = ({
   });
 
   function onSubmit(values: z.infer<typeof formShema>) {
-    console.log(values);
+    // console.log(values);
     if (isEdit) {
       updateCategory(saveID, values.categoryName);
     } else {

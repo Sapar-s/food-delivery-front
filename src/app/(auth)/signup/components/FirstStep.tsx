@@ -36,7 +36,7 @@ export default function FirsStep({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    // console.log(values);
     setCurrentStep(currentStep + 1);
   }
 

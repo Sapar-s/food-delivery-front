@@ -22,32 +22,6 @@ export const CloudinaryUpload = ({ width }: { width: string }) => {
     }
   };
 
-  // const handleUpload = async () => {
-  //   if (!file) {
-  //     alert("Please select a file");
-  //   }
-
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("upload_preset", PRESET_NAME);
-  //   formData.append("api_key", CLOUDINARY_NAME);
-  //   try {
-  //     const res = await fetch(
-  //       `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/upload`,
-  //       {
-  //         method: "POST",
-  //         body: formData,
-  //       }
-  //     );
-  //     const data = await res.json();
-  //     setImage(data.secure_url);
-  //     console.log(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //     alert("Error uploading image");
-  //   }
-  // };
-
   const deleteImage = () => {
     setImage(null);
   };
