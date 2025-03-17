@@ -12,6 +12,7 @@ import { Toggle } from "@/components/ui/toggle";
 import { useEffect, useState } from "react";
 import { AddCategory } from "./AddCategory";
 import { FoodCategoryType } from "@/utils/types";
+import { toast } from "sonner";
 
 export const DishesCategory = () => {
   const [categories, setCategories] = useState<FoodCategoryType[] | null>(null);
@@ -55,13 +56,24 @@ export const DishesCategory = () => {
 
   const deleteCategory = async (categoryId: string) => {
     try {
-      await fetch(`http://localhost:5000/food-category/${categoryId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ categoryName: categoryId }),
-      });
+      const res = await fetch(
+        `http://localhost:5000/food-category/${categoryId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ categoryName: categoryId }),
+        }
+      );
+      const jsonData = await res.json();
+
+      if (jsonData.message == "Category dotor food bainaaa !!! ") {
+        toast.error(jsonData.message);
+        return;
+      }
+
+      toast.success(jsonData.message);
       getCategories();
     } catch (error) {
       console.log("Error", error);
@@ -96,40 +108,35 @@ export const DishesCategory = () => {
       <h4 className="text-[20px] font-[600] leading-[28px] tracking-[-0.5px]">
         Dishes category
       </h4>
-      <div className="mt-4 flex gap-3 ">
+      <div className="mt-4 flex gap-3 flex-wrap ">
         <Toggle variant={"outline"} className="py-2 px-4 rounded-full ">
           All Dishes
         </Toggle>
-        <div className="flex gap-3 ">
-          {categories?.map((category, index: number) => {
-            return (
-              <ContextMenu key={index}>
-                <ContextMenuTrigger>
-                  <Toggle
-                    variant={"outline"}
-                    className="py-2 px-4 rounded-full "
-                  >
-                    {category.categoryName}
-                  </Toggle>
-                </ContextMenuTrigger>
-                <ContextMenuContent className="mt-5 ">
-                  <ContextMenuItem
-                    onClick={() => EditHandleClick(category._id)}
-                    className="cursor-pointer "
-                  >
-                    Edit
-                  </ContextMenuItem>
-                  <ContextMenuItem
-                    className="cursor-pointer "
-                    onClick={() => deleteCategory(category._id)}
-                  >
-                    Delete
-                  </ContextMenuItem>
-                </ContextMenuContent>
-              </ContextMenu>
-            );
-          })}
-        </div>
+        {categories?.map((category, index: number) => {
+          return (
+            <ContextMenu key={index}>
+              <ContextMenuTrigger>
+                <Toggle variant={"outline"} className="py-2 px-4 rounded-full ">
+                  {category.categoryName}
+                </Toggle>
+              </ContextMenuTrigger>
+              <ContextMenuContent className="mt-5 ">
+                <ContextMenuItem
+                  onClick={() => EditHandleClick(category._id)}
+                  className="cursor-pointer "
+                >
+                  Edit
+                </ContextMenuItem>
+                <ContextMenuItem
+                  className="cursor-pointer "
+                  onClick={() => deleteCategory(category._id)}
+                >
+                  Delete
+                </ContextMenuItem>
+              </ContextMenuContent>
+            </ContextMenu>
+          );
+        })}
         <AddCategory
           createCategories={createCategories}
           updateCategory={updateCategory}

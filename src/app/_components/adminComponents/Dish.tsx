@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AddNewDish } from "./AddNewDish";
-import { ApiResponse, FoodType } from "@/utils/types";
+import { FoodType } from "@/utils/types";
 import { EditDish } from "./EditDish";
 
 export const Dish = ({

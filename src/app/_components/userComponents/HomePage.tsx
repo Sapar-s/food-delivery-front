@@ -9,13 +9,14 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { Cart } from "./Carts";
-import { FoodCategoryType } from "@/utils/types";
+import { FoodCategoryType, FoodType } from "@/utils/types";
 
 export const HomePage = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null
   );
   const [categories, setCategories] = useState<FoodCategoryType[] | null>(null);
+  const [foods, setFoods] = useState<FoodType[] | null>(null);
 
   const handleClick = (categoryId: string) => {
     setSelectedCategoryId(
@@ -35,8 +36,22 @@ export const HomePage = () => {
     }
   };
 
+  const getFoods = async () => {
+    try {
+      const data = await fetch(`http://localhost:5000/food`);
+      const jsonData = await data.json();
+      setFoods(jsonData.getFood);
+
+      console.log("HomePage.tsx in jsonDataa => ", jsonData.getFood);
+    } catch (error) {
+      console.log("Error", error);
+      alert("Error in getFoods homePage.tsx ");
+    }
+  };
+
   useEffect(() => {
     getCategories();
+    getFoods();
   }, []);
 
   return (
@@ -95,12 +110,12 @@ export const HomePage = () => {
                 <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
                   {category?.categoryName}
                 </h2>
-                <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap ">
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <div key={index} className=" bg-white rounded-[20px]">
-                      <Cart />
-                    </div>
-                  ))}
+                <div className="">
+                  {/* {Array.from({ length: 6 }).map((_, index) => ( */}
+                  <div key={index} className="">
+                    <Cart foods={foods} categoryId={category._id} />
+                  </div>
+                  {/* ))} */}
                 </div>
               </div>
             );
