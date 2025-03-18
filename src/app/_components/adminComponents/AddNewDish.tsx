@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,6 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { ImageIcon, Plus, X } from "lucide-react";
-import { CloudinaryUpload } from "./CloudinaryUpload";
 
 import {
   Form,
@@ -46,17 +46,13 @@ const formSchema = z.object({
 export const AddNewDish = ({
   categoryId,
   categoryName,
-  open,
-  setOpen,
 }: {
   categoryId: string;
   categoryName: string;
-  open: boolean;
-  setOpen: (_e: boolean) => void;
 }) => {
   const [foodImageFile, setFoodImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
+  const [open, setOpen] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -115,7 +111,7 @@ export const AddNewDish = ({
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="flex h-[241px] w-[270.75px]  flex-col gap-6 py-2 px-4 justify-center items-center border-[1px]  border-dashed border-[#ef4444] rounded-[20px] ">
           <Button

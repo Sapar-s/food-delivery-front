@@ -6,13 +6,9 @@ import { EditDish } from "./EditDish";
 export const Dish = ({
   categoryId,
   categoryName,
-  open,
-  setOpen,
 }: {
   categoryId: string;
   categoryName: string;
-  open: boolean;
-  setOpen: (_e: boolean) => void;
 }) => {
   const [foods, setFoods] = useState<FoodType[] | null>(null);
   const getFoods = async () => {
@@ -28,7 +24,7 @@ export const Dish = ({
 
   const deleteFood = async (foodId: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/food/${foodId}`, {
+      await fetch(`http://localhost:5000/food/${foodId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -47,12 +43,7 @@ export const Dish = ({
 
   return (
     <div className="h-full flex flex-wrap gap-4 ">
-      <AddNewDish
-        open={open}
-        setOpen={setOpen}
-        categoryId={categoryId}
-        categoryName={categoryName}
-      />
+      <AddNewDish categoryId={categoryId} categoryName={categoryName} />
 
       {foods
         ?.filter((foods: FoodType) => foods.category?._id === categoryId)

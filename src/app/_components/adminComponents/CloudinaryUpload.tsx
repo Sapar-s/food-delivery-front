@@ -7,13 +7,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 export const CloudinaryUpload = ({ width }: { width: string }) => {
-  const [file, setFile] = useState<File | null>(null);
+  // const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string | null>(null);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
-      setFile(file);
+      // setFile(file);
       setImage(URL.createObjectURL(file));
     }
   };
