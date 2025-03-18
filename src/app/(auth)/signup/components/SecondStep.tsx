@@ -42,9 +42,12 @@ const passwordForm = z
 export const SecondStep = ({
   currentStep,
   setCurrentStep,
+
+  createUser,
 }: {
   currentStep: number;
   setCurrentStep: Dispatch<number>;
+  createUser: (_password: string) => void;
 }) => {
   const [type, setType] = useState("password");
   const router = useRouter();
@@ -62,8 +65,8 @@ export const SecondStep = ({
   });
 
   function onSubmit(values: z.infer<typeof passwordForm>) {
-    // console.log(values);
     router.push("/login");
+    createUser(values.password);
   }
 
   const handleToggle = () => {
@@ -73,6 +76,7 @@ export const SecondStep = ({
       setType("password");
     }
   };
+
   return (
     <div className="w-[416px] flex flex-col gap-6 justify-center items-start ">
       <Button

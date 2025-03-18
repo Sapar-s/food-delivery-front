@@ -70,7 +70,6 @@ export const AddNewDish = ({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     createFood(values);
-    // console.log(values);
     setOpen(false);
     form.reset();
   }

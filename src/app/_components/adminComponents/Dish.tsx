@@ -20,8 +20,6 @@ export const Dish = ({
       const data = await fetch(`http://localhost:5000/food`);
       const jsonData = await data.json();
       setFoods(jsonData.getFood);
-
-      console.log("Dish.tsx in jsonDataa => ", jsonData, categoryId);
     } catch (error) {
       console.log("Error", error);
       alert("Error in getFoods");
@@ -36,7 +34,6 @@ export const Dish = ({
           "Content-Type": "application/json",
         },
       });
-      // console.log(response);
       getFoods();
     } catch (error) {
       console.log("Error", error);
@@ -60,7 +57,6 @@ export const Dish = ({
       {foods
         ?.filter((foods: FoodType) => foods.category?._id === categoryId)
         .map((food: FoodType, index: number) => {
-          console.log({ food });
           return (
             <div
               key={index}

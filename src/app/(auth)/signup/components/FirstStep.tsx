@@ -24,9 +24,11 @@ const formSchema = z.object({
 export default function FirsStep({
   currentStep,
   setCurrentStep,
+  setEmail,
 }: {
   currentStep: number;
   setCurrentStep: Dispatch<number>;
+  setEmail: Dispatch<string>;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,8 +38,8 @@ export default function FirsStep({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values);
     setCurrentStep(currentStep + 1);
+    setEmail(values.email);
   }
 
   return (

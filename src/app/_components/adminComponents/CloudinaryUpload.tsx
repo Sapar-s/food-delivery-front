@@ -10,10 +10,6 @@ export const CloudinaryUpload = ({ width }: { width: string }) => {
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string | null>(null);
 
-  console.log("fiileee", image);
-  // const PRESET_NAME = "food-delivery-app";
-  // const CLOUDINARY_NAME = "da2ltmfaf";
-
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
@@ -25,8 +21,6 @@ export const CloudinaryUpload = ({ width }: { width: string }) => {
   const deleteImage = () => {
     setImage(null);
   };
-
-  console.log(file);
 
   return (
     <>

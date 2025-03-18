@@ -32,9 +32,34 @@ export default function LoginPage() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values);
-    router.push("/");
+    login(values.email, values.password);
   }
+
+  const login = async (email: string, password: string) => {
+    try {
+      const res = await fetch("http://localhost:5000/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email, password: password }),
+      });
+      const jsonData = await res.json();
+
+      if (jsonData.error) {
+        alert(jsonData.message);
+        return;
+      } else if (jsonData.data.role[0] == "ADMIN") {
+        router.push("/foodmenu");
+        return;
+      }
+      router.push("/");
+    } catch (error) {
+      console.log("Error", error);
+      alert("Error in login function");
+    }
+  };
+
   return (
     <div className="w-[416px] flex flex-col gap-6 justify-center items-start ">
       <Link href={"/"}>

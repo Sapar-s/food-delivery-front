@@ -29,7 +29,6 @@ export const HomePage = () => {
       const data = await fetch("http://localhost:5000/food-category");
       const jsonData = await data.json();
       setCategories(jsonData.categories_data);
-      // console.log({ jsonData });
     } catch (error) {
       console.log("Error", error);
       alert("Error in getCategories");
@@ -41,8 +40,6 @@ export const HomePage = () => {
       const data = await fetch(`http://localhost:5000/food`);
       const jsonData = await data.json();
       setFoods(jsonData.getFood);
-
-      console.log("HomePage.tsx in jsonDataa => ", jsonData.getFood);
     } catch (error) {
       console.log("Error", error);
       alert("Error in getFoods homePage.tsx ");
