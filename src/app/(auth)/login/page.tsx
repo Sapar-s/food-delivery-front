@@ -37,6 +37,8 @@ export default function LoginPage() {
 
   const login = async (email: string, password: string) => {
     try {
+      localStorage.setItem("email", email);
+
       const res = await fetch("http://localhost:5000/auth/signin", {
         method: "POST",
         headers: {
@@ -45,6 +47,8 @@ export default function LoginPage() {
         body: JSON.stringify({ email: email, password: password }),
       });
       const jsonData = await res.json();
+
+      localStorage.setItem("id", jsonData.data._id);
 
       if (jsonData.error) {
         alert(jsonData.message);
