@@ -122,6 +122,14 @@ export default function LoginPage() {
               </FormItem>
             )}
           />
+
+          <h4
+            onClick={() => router.push("/reset-password-request")}
+            className="text-[14px] font-[400] leading-[20px]  hover:underline cursor-pointer "
+          >
+            Forgot password ?
+          </h4>
+
           <Button className="w-full " type="submit">
             Let&#39;s Go
           </Button>
