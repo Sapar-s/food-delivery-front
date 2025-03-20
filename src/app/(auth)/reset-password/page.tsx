@@ -39,22 +39,9 @@ const passwordForm = z
     path: ["confirm"],
   });
 
-const Page = ({
-  currentStep,
-  setCurrentStep,
-
-  createUser,
-}: {
-  currentStep: number;
-  setCurrentStep: Dispatch<number>;
-  createUser: (_password: string) => void;
-}) => {
+const Page = () => {
   const [type, setType] = useState("password");
   const router = useRouter();
-
-  const handlePrev = () => {
-    setCurrentStep(currentStep - 1);
-  };
 
   const form = useForm<z.infer<typeof passwordForm>>({
     resolver: zodResolver(passwordForm),
@@ -66,7 +53,6 @@ const Page = ({
 
   function onSubmit(values: z.infer<typeof passwordForm>) {
     router.push("/login");
-    createUser(values.password);
   }
 
   const handleToggle = () => {
@@ -79,13 +65,6 @@ const Page = ({
 
   return (
     <div className="w-[416px] flex flex-col gap-6 justify-center items-start ">
-      <Button
-        onClick={handlePrev}
-        variant={"outline"}
-        className="w-9 h-9 py-2 px-4 flex items-center justify-center "
-      >
-        <ChevronLeft />
-      </Button>
       <div>
         <h3 className="text-[24px] font-[600] leading-[32px] ">
           Create new password

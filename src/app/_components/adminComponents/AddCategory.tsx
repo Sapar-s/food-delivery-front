@@ -19,20 +19,19 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCategory } from "@/app/_context/CategoryContext";
 
 const formShema = z.object({
   categoryName: z.string().min(2, "Minimum 2 letter !"),
 });
 
 export const AddCategory = ({
-  createCategories,
   updateCategory,
   isEdit,
   saveID,
   setOpen,
   open,
 }: {
-  createCategories: (categoryName: string) => void;
   updateCategory: (categoryName: string, categoryId: string) => void;
   isEdit: boolean;
   saveID: string;
@@ -45,6 +44,8 @@ export const AddCategory = ({
       categoryName: "",
     },
   });
+
+  const { createCategories } = useCategory();
 
   function onSubmit(values: z.infer<typeof formShema>) {
     if (isEdit) {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { CategoryProvider } from "./_context/CategoryContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div>{children}</div>
+        <CategoryProvider>{children}</CategoryProvider>
         <Toaster position="bottom-left" expand={true} richColors />
       </body>
     </html>

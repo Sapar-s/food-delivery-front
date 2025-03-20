@@ -28,7 +28,7 @@ export const Step1 = ({
 }: {
   currentStep: number;
   setCurrentStep: Dispatch<number>;
-  setEmail: Dispatch<string>;
+  setEmail: (email: string) => void;
 }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,7 +43,7 @@ export const Step1 = ({
   }
   return (
     <div className="w-[416px] flex flex-col gap-6 justify-center items-start ">
-      <Link href={"/"}>
+      <Link href={"/login"}>
         <Button
           variant={"outline"}
           className="w-9 h-9 py-2 px-4 flex items-center justify-center "

@@ -3,46 +3,35 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Dispatch } from "react";
-
-const formSchema = z.object({
-  email: z.string().email(),
-});
 
 export const Step2 = ({
   currentStep,
   setCurrentStep,
-  setEmail,
+  sendLink,
 }: {
   currentStep: number;
   setCurrentStep: Dispatch<number>;
-  setEmail: Dispatch<string>;
+  sendLink: () => void;
 }) => {
   const resendEmail = () => {
     alert("Okay");
+    sendLink();
+  };
+
+  const handlePrev = () => {
+    setCurrentStep(currentStep - 1);
   };
   return (
     <div className="w-[416px] flex flex-col gap-6 justify-center items-start ">
-      <Link href={"/"}>
-        <Button
-          variant={"outline"}
-          className="w-9 h-9 py-2 px-4 flex items-center justify-center "
-        >
-          <ChevronLeft />
-        </Button>
-      </Link>
+      <Button
+        onClick={() => handlePrev()}
+        variant={"outline"}
+        className="w-9 h-9 py-2 px-4 flex items-center justify-center "
+      >
+        <ChevronLeft />
+      </Button>
+
       <div>
         <h3 className="text-[24px] font-[600] leading-[32px] ">
           Please verify Your Email

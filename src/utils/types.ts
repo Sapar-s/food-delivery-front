@@ -18,11 +18,6 @@ export type FoodType = {
   _id: string;
 };
 
-export type ApiResponse = {
-  getFood: FoodType[];
-  message: string;
-};
-
 export type DishType = {
   category: string;
   foodName: string;

@@ -10,29 +10,21 @@ import {
 import { useEffect, useState } from "react";
 import { Cart } from "./Carts";
 import { FoodCategoryType, FoodType } from "@/utils/types";
+import { useCategory } from "@/app/_context/CategoryContext";
 
 export const HomePage = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null
   );
-  const [categories, setCategories] = useState<FoodCategoryType[] | null>(null);
+
   const [foods, setFoods] = useState<FoodType[] | null>(null);
+
+  const { getCategories, setCategories, categories } = useCategory();
 
   const handleClick = (categoryId: string) => {
     setSelectedCategoryId(
       categoryId === selectedCategoryId ? null : categoryId
     );
-  };
-
-  const getCategories = async () => {
-    try {
-      const data = await fetch("http://localhost:5000/food-category");
-      const jsonData = await data.json();
-      setCategories(jsonData.categories_data);
-    } catch (error) {
-      console.log("Error", error);
-      alert("Error in getCategories");
-    }
   };
 
   const getFoods = async () => {
@@ -46,10 +38,10 @@ export const HomePage = () => {
     }
   };
 
-  useEffect(() => {
-    getCategories();
-    getFoods();
-  }, []);
+  // useEffect(() => {
+  //   getCategories();
+  //   getFoods();
+  // }, []);
 
   return (
     <div className="mb-[134px] ">
@@ -75,7 +67,7 @@ export const HomePage = () => {
             className="w-full flex gap-3  "
           >
             <CarouselPrevious className="bg-background-none border-none text-white" />
-            <CarouselContent className="pl-4">
+            <CarouselContent className="pl-4 flex gap-2 ">
               {categories?.map((category, index) => (
                 <div key={index} className="p-1">
                   <Badge
@@ -85,7 +77,7 @@ export const HomePage = () => {
                         ? "destructive"
                         : "secondary"
                     }
-                    className={`w-[100px] py-2 px-3 cursor-pointer rounded-full flex items-center justify-center ${
+                    className={` py-1 px-5 text-[18px] font-[400] leading-[28px] cursor-pointer rounded-full  ${
                       category._id === selectedCategoryId
                         ? "bg-[#EF4444]"
                         : "bg-background"
