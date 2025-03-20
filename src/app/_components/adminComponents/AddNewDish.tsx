@@ -28,6 +28,7 @@ import { DishType } from "@/utils/types";
 import Image from "next/image";
 import { useState } from "react";
 import { uploadImage } from "@/lib/handle-upload";
+import { useFood } from "@/app/_context/FoodContext";
 
 const formSchema = z.object({
   foodName: z.string().min(2, {
@@ -53,6 +54,8 @@ export const AddNewDish = ({
   const [foodImageFile, setFoodImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const { getFoods } = useFood();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -66,6 +69,7 @@ export const AddNewDish = ({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     createFood(values);
+
     setOpen(false);
     form.reset();
   }
@@ -86,6 +90,7 @@ export const AddNewDish = ({
           category: categoryId,
         }),
       });
+      getFoods();
     } catch (error) {
       console.log("Error", error);
       alert("Error in createFood");

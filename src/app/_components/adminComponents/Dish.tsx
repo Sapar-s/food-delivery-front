@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { AddNewDish } from "./AddNewDish";
 import { FoodType } from "@/utils/types";
 import { EditDish } from "./EditDish";
+import { useFood } from "@/app/_context/FoodContext";
 
 export const Dish = ({
   categoryId,
@@ -10,36 +10,7 @@ export const Dish = ({
   categoryId: string;
   categoryName: string;
 }) => {
-  const [foods, setFoods] = useState<FoodType[] | null>(null);
-  const getFoods = async () => {
-    try {
-      const data = await fetch(`http://localhost:5000/food`);
-      const jsonData = await data.json();
-      setFoods(jsonData.getFood);
-    } catch (error) {
-      console.log("Error", error);
-      alert("Error in getFoods");
-    }
-  };
-
-  const deleteFood = async (foodId: string) => {
-    try {
-      await fetch(`http://localhost:5000/food/${foodId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      getFoods();
-    } catch (error) {
-      console.log("Error", error);
-      alert("Error in deleteFoods");
-    }
-  };
-
-  useEffect(() => {
-    getFoods();
-  }, []);
+  const { foods, deleteFood } = useFood();
 
   return (
     <div className="h-full flex flex-wrap gap-4 ">

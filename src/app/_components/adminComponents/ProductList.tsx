@@ -1,26 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Dish } from "./Dish";
-import { FoodCategoryType } from "@/utils/types";
+import { useCategory } from "@/app/_context/CategoryContext";
 
 export const ProductList = () => {
-  const [categories, setCategories] = useState<FoodCategoryType[] | null>(null);
-
-  const getCategories = async () => {
-    try {
-      const data = await fetch("http://localhost:5000/food-category");
-      const jsonData = await data.json();
-      setCategories(jsonData.categories_data);
-    } catch (error) {
-      console.log("Error", error);
-      alert("Error in getCategories");
-    }
-  };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
+  const { categories } = useCategory();
 
   return (
     <div className="w-full ">

@@ -7,41 +7,24 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Cart } from "./Carts";
-import { FoodCategoryType, FoodType } from "@/utils/types";
 import { useCategory } from "@/app/_context/CategoryContext";
+import { useFood } from "@/app/_context/FoodContext";
 
 export const HomePage = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null
   );
 
-  const [foods, setFoods] = useState<FoodType[] | null>(null);
-
-  const { getCategories, setCategories, categories } = useCategory();
+  const { categories } = useCategory();
+  const { foods } = useFood();
 
   const handleClick = (categoryId: string) => {
     setSelectedCategoryId(
       categoryId === selectedCategoryId ? null : categoryId
     );
   };
-
-  const getFoods = async () => {
-    try {
-      const data = await fetch(`http://localhost:5000/food`);
-      const jsonData = await data.json();
-      setFoods(jsonData.getFood);
-    } catch (error) {
-      console.log("Error", error);
-      alert("Error in getFoods homePage.tsx ");
-    }
-  };
-
-  // useEffect(() => {
-  //   getCategories();
-  //   getFoods();
-  // }, []);
 
   return (
     <div className="mb-[134px] ">

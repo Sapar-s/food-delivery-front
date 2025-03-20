@@ -24,9 +24,12 @@ type categoryContextType = {
 const categoryContext = createContext<categoryContextType>(
   {} as categoryContextType
 );
+
 export const useCategory = () => {
   return useContext(categoryContext);
 };
+
+// Undsen function
 export const CategoryProvider = ({ children }: { children: ReactNode }) => {
   const [categories, setCategories] = useState<FoodCategoryType[] | null>(null);
 

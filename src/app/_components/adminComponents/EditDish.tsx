@@ -16,6 +16,7 @@ import {
 import { Pencil, Trash } from "lucide-react";
 import { CloudinaryUpload } from "./CloudinaryUpload";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 export const EditDish = ({
   deleteFood,
@@ -24,8 +25,10 @@ export const EditDish = ({
   deleteFood: (_e: string) => void;
   foodID: string;
 }) => {
+  const [open, setOpen] = useState<boolean>(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="w-11 h-11 py-2 px-4 flex items-center justify-center gap-2 bg-[#fff] rounded-full cursor-pointer ">
           <Pencil className="text-[#ef4444] w-4 h-4 " />
@@ -35,8 +38,6 @@ export const EditDish = ({
       <DialogContent>
         <DialogHeader hidden></DialogHeader>
         <DialogTitle hidden></DialogTitle>
-
-        {/*  */}
 
         <div className="w-[472px] p-6 flex flex-col items-start gap-3 ">
           <div className="w-full pb-4 flex justify-center items-center gap-[10px] ">
