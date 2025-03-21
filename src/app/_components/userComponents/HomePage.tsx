@@ -82,12 +82,12 @@ export const HomePage = () => {
                 <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
                   {category?.categoryName}
                 </h2>
-                <div className="">
-                  {/* {Array.from({ length: 6 }).map((_, index) => ( */}
-                  <div key={index} className="">
-                    <Cart foods={foods} categoryId={category._id} />
-                  </div>
-                  {/* ))} */}
+
+                <div
+                  key={index}
+                  className="w-full flex justify-center gap-9 mt-[54px] flex-wrap  "
+                >
+                  <Cart foods={foods} categoryId={category._id} />
                 </div>
               </div>
             );

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChevronRight, MapPin, ShoppingCart, User } from "lucide-react";
+import { ChevronRight, MapPin, ShoppingCart, User, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -38,6 +38,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useState } from "react";
 
 const formShema = z.object({
   address: z.string().min(2, "Please enter your address first. !"),
@@ -45,6 +46,8 @@ const formShema = z.object({
 
 export const Header = () => {
   const router = useRouter();
+  const [address, setAddress] = useState<string | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formShema>>({
     resolver: zodResolver(formShema),
@@ -54,12 +57,22 @@ export const Header = () => {
   });
 
   function onSubmit(values: z.infer<typeof formShema>) {
+    console.log(values);
+    setAddress(values.address);
+    closeDialog();
     form.reset();
   }
-
   const signOutHandler = () => {
     localStorage.clear();
     router.push("/login");
+  };
+
+  const clearHandler = () => {
+    setAddress(null);
+  };
+
+  const closeDialog = () => {
+    setOpen(false);
   };
 
   const userEmail = localStorage.getItem("email");
@@ -79,22 +92,42 @@ export const Header = () => {
         </div>
         <div className="flex gap-3">
           {userEmail ? (
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className="flex gap-2 items-center bg-[#FFFFFF] py-2 px-3 rounded-full"
-                >
-                  <MapPin color="#EF4444" />
-                  <p className="text-[#EF4444] flex gap-2 text-[12px]">
-                    Delivery address:
-                    <span className="text-muted-foreground text-[12px]">
-                      Add Location
-                    </span>
-                  </p>
-                  <ChevronRight color="gray" />
-                </Button>
-              </DialogTrigger>
+            <Dialog open={open} onOpenChange={setOpen}>
+              {address ? (
+                <div className="relative ">
+                  <DialogTrigger asChild>
+                    <div className="w-[251px] bg-[#FFFFFF] rounded-full  ">
+                      <h4 className="flex gap-2 items-center bg-[#ffffff] rounded-full border-none py-2 px-3">
+                        <MapPin color="#EF4444" className="w-5 h-5 " />
+                        <p className="text-primary font-[400] leading-[16px] flex gap-2 text-[12px]">
+                          {address}
+                        </p>
+                      </h4>
+                    </div>
+                  </DialogTrigger>
+                  <X
+                    onClick={clearHandler}
+                    className="z-20 absolute top-2 right-3 cursor-pointer "
+                    color="gray"
+                  />
+                </div>
+              ) : (
+                <DialogTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className="flex gap-2 items-center bg-[#FFFFFF] py-2 px-3 rounded-full"
+                  >
+                    <MapPin color="#EF4444" />
+                    <p className="text-[#EF4444] flex gap-2 text-[12px]">
+                      Delivery address:
+                      <span className="text-muted-foreground text-[12px]">
+                        Add Location
+                      </span>
+                    </p>
+                    <ChevronRight color="gray" />
+                  </Button>
+                </DialogTrigger>
+              )}
 
               <DialogContent>
                 <DialogHeader hidden></DialogHeader>
@@ -115,13 +148,6 @@ export const Header = () => {
                       render={({ field }) => (
                         <FormItem className="w-full ">
                           <FormControl className="w-full ">
-                            {/* <div className="w-full  flex flex-col gap-[8px] ">
-                              <Input
-                                placeholder="Please provide specific address details such as building number, entrance, and apartment number"
-                                className="w-full h-[112px] py-2 px-3 "
-                                {...field}
-                              />
-                            </div> */}
                             <div className="w-full flex flex-col gap-[8px]">
                               <Textarea
                                 placeholder="Please provide specific address details such as building number, entrance, and apartment number"

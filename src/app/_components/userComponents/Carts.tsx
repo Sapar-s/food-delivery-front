@@ -32,7 +32,7 @@ export const Cart = ({
     setCount(count + 1);
   };
   return (
-    <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap  ">
+    <>
       {foods
         ?.filter((food) => food.category._id === categoryId)
         .map((food, index) => {
@@ -138,6 +138,6 @@ export const Cart = ({
             </div>
           );
         })}
-    </div>
+    </>
   );
 };
