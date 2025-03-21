@@ -24,3 +24,14 @@ export type DishType = {
   ingredients: string;
   price: string;
 };
+
+export type User = {
+  email: string;
+  password: string;
+  orderedFoods: string[];
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  orderFoods: [];
+  __v: number;
+};

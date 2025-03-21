@@ -21,21 +21,15 @@ export const Cart = ({
   categoryId: string;
 }) => {
   const [count, setCount] = useState<number>(1);
-  const [totalPrice, setTotalPrice] = useState<number>(12.99);
 
   const minusButton = () => {
-    if (count === 1) {
-      setTotalPrice(12.99);
-    }
     if (count > 1) {
       setCount(count - 1);
-      setTotalPrice(totalPrice - 12.99);
     }
   };
 
   const plusButton = () => {
     setCount(count + 1);
-    setTotalPrice(totalPrice + 12.99);
   };
   return (
     <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap  ">
@@ -93,7 +87,7 @@ export const Cart = ({
                               Total price
                             </h5>
                             <h4 className="text-[24px] font-[600] leading-[32px] ">
-                              ${food?.price}
+                              ${food?.price * count}
                             </h4>
                           </div>
 

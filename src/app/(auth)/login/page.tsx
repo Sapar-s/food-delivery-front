@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/app/_context/UserContext";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,6 +24,7 @@ const formSchema = z.object({
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useUser();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,35 +36,6 @@ export default function LoginPage() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     login(values.email, values.password);
   }
-
-  const login = async (email: string, password: string) => {
-    try {
-      localStorage.setItem("email", email);
-
-      const res = await fetch("http://localhost:5000/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email, password: password }),
-      });
-      const jsonData = await res.json();
-
-      localStorage.setItem("id", jsonData.data._id);
-
-      if (jsonData.error) {
-        alert(jsonData.message);
-        return;
-      } else if (jsonData.data.role[0] == "ADMIN") {
-        router.push("/foodmenu");
-        return;
-      }
-      router.push("/");
-    } catch (error) {
-      console.log("Error", error);
-      alert("Error in login function");
-    }
-  };
 
   return (
     <div className="w-[416px] flex flex-col gap-6 justify-center items-start ">
