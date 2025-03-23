@@ -50,7 +50,7 @@ export const HomePage = () => {
             className="w-full flex gap-3  "
           >
             <CarouselPrevious className="bg-background-none border-none text-white" />
-            <CarouselContent className="pl-4 flex gap-2 ">
+            <CarouselContent className="pl-4 flex gap-2 items-center ">
               {categories?.map((category, index) => (
                 <div key={index} className="p-1">
                   <Badge
@@ -60,7 +60,7 @@ export const HomePage = () => {
                         ? "destructive"
                         : "secondary"
                     }
-                    className={` py-1 px-5 text-[18px] font-[400] leading-[28px] cursor-pointer rounded-full  ${
+                    className={` py-1 px-5 text-[18px] font-[400] whitespace-nowrap leading-[28px]  cursor-pointer rounded-full  ${
                       category._id === selectedCategoryId
                         ? "bg-[#EF4444]"
                         : "bg-background"

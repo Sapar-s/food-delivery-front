@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChevronRight, MapPin, ShoppingCart, User, X } from "lucide-react";
+import { ChevronRight, MapPin, User, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,26 +19,19 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { Textarea } from "@/components/ui/textarea";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { OrderDetail } from "./OrderDetail";
 
 const formShema = z.object({
   address: z.string().min(2, "Please enter your address first. !"),
@@ -58,10 +51,16 @@ export const Header = () => {
 
   function onSubmit(values: z.infer<typeof formShema>) {
     console.log(values);
-    setAddress(values.address);
+    localStorage.setItem("address", values.address);
     closeDialog();
     form.reset();
   }
+
+  useEffect(() => {
+    const getAddress = localStorage.getItem("address");
+    setAddress(getAddress);
+  }, [onSubmit]);
+
   const signOutHandler = () => {
     localStorage.clear();
     router.push("/login");
@@ -69,6 +68,7 @@ export const Header = () => {
 
   const clearHandler = () => {
     setAddress(null);
+    localStorage.removeItem("address");
   };
 
   const closeDialog = () => {
@@ -177,47 +177,7 @@ export const Header = () => {
           ) : (
             ""
           )}
-          {userEmail ? (
-            <Sheet>
-              <SheetTrigger>
-                <div className="w-[36px] h-[36px] bg-[#f4f4f5] rounded-[50%] flex justify-center items-center">
-                  <ShoppingCart color="black" className="w-[13px] h-[13px]" />
-                </div>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle className="flex gap-3 text-background">
-                    <ShoppingCart />
-                    Order detail
-                  </SheetTitle>
-                  <Tabs defaultValue="account">
-                    <TabsList className="w-[100%] rounded-full">
-                      <TabsTrigger
-                        value="cart"
-                        className="w-[50%] rounded-full"
-                      >
-                        Cart
-                      </TabsTrigger>
-                      <TabsTrigger
-                        value="order"
-                        className="w-[50%] rounded-full"
-                      >
-                        Order
-                      </TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="cart" className="text-background">
-                      <div className="w-[439px] h-[508px] p-4 rounded-[20px] "></div>
-                    </TabsContent>
-                    <TabsContent value="order" className=" ">
-                      Change your password here.
-                    </TabsContent>
-                  </Tabs>
-                </SheetHeader>
-              </SheetContent>
-            </Sheet>
-          ) : (
-            ""
-          )}
+          {userEmail ? <OrderDetail /> : ""}
           {userEmail ? (
             <Popover>
               <PopoverTrigger>

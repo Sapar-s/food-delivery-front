@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -10,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FoodType } from "@/utils/types";
 
 export const Cart = ({
@@ -21,6 +22,8 @@ export const Cart = ({
   categoryId: string;
 }) => {
   const [count, setCount] = useState<number>(1);
+  const [address, setAddress] = useState<string | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
 
   const minusButton = () => {
     if (count > 1) {
@@ -31,6 +34,16 @@ export const Cart = ({
   const plusButton = () => {
     setCount(count + 1);
   };
+
+  const addToCart = () => {
+    alert("Added to cart");
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    const getAddress = localStorage.getItem("address");
+    setAddress(getAddress);
+  }, [open]);
   return (
     <>
       {foods
@@ -47,7 +60,7 @@ export const Cart = ({
                   backgroundImage: `url(${food?.image})`,
                 }}
               >
-                <Dialog>
+                <Dialog open={open} onOpenChange={setOpen}>
                   <DialogTrigger asChild>
                     <Button
                       className="rounded-full w-11 h-11 "
@@ -59,10 +72,7 @@ export const Cart = ({
                   <DialogContent className="w-[826px] max-w-auto h-[412px] p-6 flex gap-6 ">
                     <DialogHeader hidden>
                       <DialogTitle hidden></DialogTitle>
-                      {/* <DialogDescription ></DialogDescription> */}
                     </DialogHeader>
-                    {/* <div className="w-[826px] h-[412px] p-6 flex gap-6  "> */}
-                    {/* <div className="w-full"> */}
                     <Image
                       height={364}
                       width={377}
@@ -70,7 +80,6 @@ export const Cart = ({
                       className="w-full rounded-xl "
                       src={food?.image}
                     />
-                    {/* </div> */}
                     <div className="w-full h-full flex flex-col justify-between">
                       <div>
                         <h3 className="text-[30px] leading-[36px] text-[#ef4444] font-[600] ">
@@ -111,12 +120,41 @@ export const Cart = ({
                             </Button>
                           </div>
                         </div>
-                        <Button className="h-11 w-full rounded-full ">
-                          Add to cart
-                        </Button>
+                        {address ? (
+                          <Button
+                            onClick={addToCart}
+                            className="h-11 w-full rounded-full "
+                          >
+                            Add to cart
+                          </Button>
+                        ) : (
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button className="h-11 w-full rounded-full ">
+                                Add to cart
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="w-[664px] h-[320px] p-6 flex flex-col justify-between items-center rounded-[20px] bg-background ">
+                              <DialogHeader hidden>
+                                <DialogTitle>
+                                  Please select your delivery address!
+                                </DialogTitle>
+                              </DialogHeader>
+                              <Image
+                                alt=""
+                                src={"logo.svg"}
+                                height={200}
+                                width={200}
+                                className="w-[142px] h-[116px] "
+                              />
+                              <DialogClose className="h-11 py-2 px-12 rounded-full bg-secondary ">
+                                Close
+                              </DialogClose>
+                            </DialogContent>
+                          </Dialog>
+                        )}
                       </div>
                     </div>
-                    {/* </div> */}
                   </DialogContent>
                 </Dialog>
               </div>
