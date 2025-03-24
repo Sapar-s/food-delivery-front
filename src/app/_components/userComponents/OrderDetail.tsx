@@ -12,16 +12,16 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export const OrderDetail = () => {
-  const [activeTab, setActiveTab] = useState("cart"); // cart-г анхдагч таб болгох
-  const [isSheetOpen, setIsSheetOpen] = useState(false); // Sheet нээгдэх эсэхийг хянах
+  const [activeTab, setActiveTab] = useState("cart");
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   return (
     <div>
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger
           onClick={() => {
-            setActiveTab("cart"); // ShoppingCart дарахад "cart" идэвхжих
-            setIsSheetOpen(true); // Sheet-г нээх
+            setActiveTab("cart");
+            setIsSheetOpen(true);
           }}
         >
           <div className="w-[36px] h-[36px] bg-[#f4f4f5] rounded-[50%] flex justify-center items-center">
@@ -39,12 +39,19 @@ export const OrderDetail = () => {
             defaultValue={activeTab}
             value={activeTab}
             onValueChange={setActiveTab}
+            className="w-full"
           >
             <TabsList className="w-full rounded-full p-1 flex items-center gap-2 bg-background">
-              <TabsTrigger value="cart" className="w-full rounded-full">
+              <TabsTrigger
+                value="cart"
+                className="w-full rounded-full data-[state=active]:bg-[#ef4444] data-[state=active]:text-[#ffffff]"
+              >
                 Cart
               </TabsTrigger>
-              <TabsTrigger value="order" className="w-full rounded-full">
+              <TabsTrigger
+                value="order"
+                className="w-full rounded-full data-[state=active]:bg-[#ef4444] data-[state=active]:text-[#ffffff]"
+              >
                 Order
               </TabsTrigger>
             </TabsList>

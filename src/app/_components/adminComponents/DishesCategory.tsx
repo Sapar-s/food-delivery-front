@@ -9,9 +9,8 @@ import {
 
 import { Toggle } from "@/components/ui/toggle";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AddCategory } from "./AddCategory";
-import { FoodCategoryType } from "@/utils/types";
 
 import { useCategory } from "@/app/_context/CategoryContext";
 import { Badge } from "@/components/ui/badge";
