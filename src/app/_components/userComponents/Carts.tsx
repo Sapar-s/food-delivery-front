@@ -13,17 +13,21 @@ import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FoodType } from "@/utils/types";
+import { useFoodOrder } from "@/app/_context/FoodOrderContext";
 
 export const Cart = ({
   foods,
   categoryId,
 }: {
-  foods: FoodType[] | null;
+  foods: FoodType[] | null | undefined;
   categoryId: string;
 }) => {
   const [count, setCount] = useState<number>(1);
   const [address, setAddress] = useState<string | null>(null);
-  const [open, setOpen] = useState<boolean>(false);
+  const [openFoodId, setOpenFoodId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  const { addToCart } = useFoodOrder();
 
   const minusButton = () => {
     if (count > 1) {
@@ -35,15 +39,13 @@ export const Cart = ({
     setCount(count + 1);
   };
 
-  const addToCart = () => {
-    alert("Added to cart");
-    setOpen(false);
-  };
-
   useEffect(() => {
+    const id = localStorage.getItem("userId");
+    setUserId(id);
+
     const getAddress = localStorage.getItem("address");
     setAddress(getAddress);
-  }, [open]);
+  }, [openFoodId]);
   return (
     <>
       {foods
@@ -60,7 +62,16 @@ export const Cart = ({
                   backgroundImage: `url(${food?.image})`,
                 }}
               >
-                <Dialog open={open} onOpenChange={setOpen}>
+                <Dialog
+                  open={openFoodId === food._id}
+                  onOpenChange={(isOpen) => {
+                    if (isOpen) {
+                      setOpenFoodId(food._id);
+                    } else {
+                      setOpenFoodId(null);
+                    }
+                  }}
+                >
                   <DialogTrigger asChild>
                     <Button
                       className="rounded-full w-11 h-11 "

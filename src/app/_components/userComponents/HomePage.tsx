@@ -11,10 +11,14 @@ import { useState } from "react";
 import { Cart } from "./Carts";
 import { useCategory } from "@/app/_context/CategoryContext";
 import { useFood } from "@/app/_context/FoodContext";
+import { FoodType } from "@/utils/types";
 
 export const HomePage = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null
+  );
+  const [sortedFoods, setSortedFoods] = useState<FoodType[] | undefined>(
+    undefined
   );
 
   const { categories } = useCategory();
@@ -54,7 +58,13 @@ export const HomePage = () => {
               {categories?.map((category, index) => (
                 <div key={index} className="p-1">
                   <Badge
-                    onClick={() => handleClick(category._id)}
+                    onClick={() => {
+                      handleClick(category._id);
+                      const sortedFoods = foods?.filter(
+                        (food) => food.category._id === category._id
+                      );
+                      setSortedFoods(sortedFoods);
+                    }}
                     variant={
                       category._id === selectedCategoryId
                         ? "destructive"
@@ -75,24 +85,50 @@ export const HomePage = () => {
             <CarouselNext className="bg-background-none border-none text-white" />
           </Carousel>
         </div>
-        <div className="max-w-[1264px] w-full ">
-          {categories?.map((category, index) => {
-            return (
-              <div key={index}>
-                <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
-                  {category?.categoryName}
-                </h2>
+        {selectedCategoryId ? (
+          <div className="max-w-[1264px] w-full ">
+            <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
+              {
+                categories?.find((cat) => cat._id === selectedCategoryId)
+                  ?.categoryName
+              }
+            </h2>
 
-                <div
-                  key={index}
-                  className="w-full flex justify-center gap-9 mt-[54px] flex-wrap  "
-                >
-                  <Cart foods={foods} categoryId={category._id} />
-                </div>
+            {sortedFoods && sortedFoods.length === 0 ? (
+              <p className="text-red-500 text-[20px] mt-[30px]">
+                No food found in this category.
+              </p>
+            ) : (
+              <div className="w-full flex justify-center gap-9 mt-[54px] flex-wrap  ">
+                <Cart foods={sortedFoods} categoryId={selectedCategoryId} />
               </div>
-            );
-          })}
-        </div>
+            )}
+          </div>
+        ) : (
+          <div className="max-w-[1264px] w-full ">
+            {categories?.map((category, index) => {
+              const categoryFoods = foods?.filter(
+                (food) => food.category._id === category._id
+              );
+
+              if (!categoryFoods || categoryFoods.length === 0) return null;
+              return (
+                <div key={index}>
+                  <h2 className="text-[30px] leading-[36px] font-[600] text-white mt-[72px] ">
+                    {category?.categoryName}
+                  </h2>
+
+                  <div
+                    key={index}
+                    className="w-full flex justify-center gap-9 mt-[54px] flex-wrap  "
+                  >
+                    <Cart foods={foods} categoryId={category._id} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

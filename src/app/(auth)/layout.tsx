@@ -14,7 +14,7 @@ const Layout = (props: Props) => {
           <Image
             alt=""
             src={
-              "https://res.cloudinary.com/da2ltmfaf/image/upload/v1739929534/frame_h8teog.png"
+              "https://res.cloudinary.com/da2ltmfaf/image/upload/v1744251938/js9oqeslxlpxg8ywrxxn.png"
             }
             width={856}
             height={904}

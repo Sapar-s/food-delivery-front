@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { CategoryProvider } from "./_context/CategoryContext";
 import { FoodProvider } from "./_context/FoodContext";
 import UsersProvider from "./_context/UserContext";
+import { FoodOrderProvider } from "./_context/FoodOrderContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,11 +32,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UsersProvider>
-          <FoodProvider>
-            <CategoryProvider>{children}</CategoryProvider>
-          </FoodProvider>
-        </UsersProvider>
+        <FoodOrderProvider>
+          <UsersProvider>
+            <FoodProvider>
+              <CategoryProvider>{children}</CategoryProvider>
+            </FoodProvider>
+          </UsersProvider>
+        </FoodOrderProvider>
         <Toaster position="bottom-left" expand={true} richColors />
       </body>
     </html>
