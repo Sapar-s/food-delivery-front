@@ -29,6 +29,20 @@ export const Cart = ({
 
   const { addToCart } = useFoodOrder();
 
+  const orderHandler = ({
+    foodId,
+    count,
+  }: {
+    foodId: string;
+    count: number;
+  }) => {
+    if (userId && address) {
+      addToCart(foodId, count);
+    } else {
+      alert("Please select your delivery address!");
+    }
+  };
+
   const minusButton = () => {
     if (count > 1) {
       setCount(count - 1);
@@ -133,7 +147,14 @@ export const Cart = ({
                         </div>
                         {address ? (
                           <Button
-                            onClick={addToCart}
+                            onClick={() => {
+                              if (userId && address) {
+                                orderHandler({
+                                  foodId: food._id,
+                                  count: count,
+                                });
+                              }
+                            }}
                             className="h-11 w-full rounded-full "
                           >
                             Add to cart
